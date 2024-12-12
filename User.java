@@ -1,16 +1,11 @@
-package com.project.Bootcamp.entity;
+package com.example.authentication.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "users_authentication")
 public class User {
 
     @Id
@@ -27,25 +22,17 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    private String mobileNumber;
-
-    private boolean enabled = false;
-
-    private String verificationCode;
-
-    private LocalDateTime verificationExpiry;
-
-    private boolean locked = false;
-
-    private int failedLoginAttempts = 0;
+    private String mobile;
 
     @Enumerated(EnumType.STRING)
-    private Role role = Role.USER;
+    private UserStatus status;
 
-    public enum Role {
-        USER,
-        ADMIN
-    }
+    private int failedLoginAttempts;
+
+    private String confirmationCode;
+    private LocalDateTime confirmationExpiry;
+
+    // Getters and Setters or Lombok annotations
 
     public Long getId() {
         return id;
@@ -79,44 +66,20 @@ public class User {
         this.password = password;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public UserStatus getStatus() {
+        return status;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
-    }
-
-    public LocalDateTime getVerificationExpiry() {
-        return verificationExpiry;
-    }
-
-    public void setVerificationExpiry(LocalDateTime verificationExpiry) {
-        this.verificationExpiry = verificationExpiry;
-    }
-
-    public boolean isLocked() {
-        return locked;
-    }
-
-    public void setLocked(boolean locked) {
-        this.locked = locked;
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 
     public int getFailedLoginAttempts() {
@@ -127,11 +90,19 @@ public class User {
         this.failedLoginAttempts = failedLoginAttempts;
     }
 
-    public Role getRole() {
-        return role;
+    public String getConfirmationCode() {
+        return confirmationCode;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setConfirmationCode(String confirmationCode) {
+        this.confirmationCode = confirmationCode;
+    }
+
+    public LocalDateTime getConfirmationExpiry() {
+        return confirmationExpiry;
+    }
+
+    public void setConfirmationExpiry(LocalDateTime confirmationExpiry) {
+        this.confirmationExpiry = confirmationExpiry;
     }
 }
